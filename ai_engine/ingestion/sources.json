@@ -1,0 +1,121 @@
+[
+  {
+    "name": "BBC News Top Stories",
+    "url": "http://feeds.bbci.co.uk/news/rss.xml",
+    "type": "rss",
+    "category": "national",
+    "language": "en"
+  },
+  {
+    "name": "The Hindu - National",
+    "url": "https://www.thehindu.com/news/national/feeder/default.rss",
+    "type": "rss",
+    "category": "national",
+    "language": "en"
+  },
+  {
+    "name": "Times of India",
+    "url": "https://timesofindia.indiatimes.com/rssfeedstopstories.cms",
+    "type": "rss",
+    "category": "national",
+    "language": "en"
+  },
+  {
+    "name": "Hindustan Times India",
+    "url": "https://www.hindustantimes.com/feeds/rss/india-news/rssfeed.xml",
+    "type": "rss",
+    "category": "national",
+    "language": "en"
+  },
+  {
+    "name": "India Today",
+    "url": "https://www.indiatoday.in/rss/home",
+    "type": "rss",
+    "category": "national",
+    "language": "en"
+  },
+  {
+    "name": "Amar Ujala (Hindi)",
+    "url": "https://www.amarujala.com/rss/breaking-news.xml",
+    "type": "rss",
+    "category": "national",
+    "language": "hi"
+  },
+  {
+    "name": "Zee News Hindi",
+    "url": "https://zeenews.india.com/rss/india-national-news.xml",
+    "type": "rss",
+    "category": "national",
+    "language": "hi"
+  },
+  {
+    "name": "Aaj Tak (Hindi)",
+    "url": "https://feeds.feedburner.com/aajtaklive",
+    "type": "rss",
+    "category": "national",
+    "language": "hi"
+  },
+  {
+    "name": "Moneycontrol",
+    "url": "https://www.moneycontrol.com/rss/latestnews.xml",
+    "type": "rss",
+    "category": "business",
+    "language": "en"
+  },
+  {
+    "name": "Hindu Business Line",
+    "url": "https://www.thehindubusinessline.com/feeder/default.rss",
+    "type": "rss",
+    "category": "business",
+    "language": "en"
+  },
+  {
+    "name": "NDTV Business",
+    "url": "https://feeds.feedburner.com/ndtvprofit-latest",
+    "type": "rss",
+    "category": "business",
+    "language": "en"
+  },
+  {
+    "name": "Livemint",
+    "url": "https://www.livemint.com/rss/news",
+    "type": "rss",
+    "category": "business",
+    "language": "en"
+  },
+  {
+    "name": "TechCrunch",
+    "url": "https://techcrunch.com/feed/",
+    "type": "rss",
+    "category": "tech",
+    "language": "en"
+  },
+  {
+    "name": "Wired",
+    "url": "https://www.wired.com/feed/rss",
+    "type": "rss",
+    "category": "tech",
+    "language": "en"
+  },
+  {
+    "name": "The Hindu - Science & Technology",
+    "url": "https://www.thehindu.com/sci-tech/technology/feeder/default.rss",
+    "type": "rss",
+    "category": "tech",
+    "language": "en"
+  },
+  {
+    "name": "ESPN Cricinfo",
+    "url": "https://www.espncricinfo.com/rss/content/story/feeds/0.xml",
+    "type": "rss",
+    "category": "sports",
+    "language": "en"
+  },
+  {
+    "name": "ESPN Top Stories",
+    "url": "https://www.espn.com/espn/rss/news",
+    "type": "rss",
+    "category": "sports",
+    "language": "en"
+  }
+]

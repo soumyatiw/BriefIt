@@ -1,0 +1,15 @@
+
+langgraph
+langchain-core
+langgraph-checkpoint-sqlite
+sentence-transformers
+torch
+scikit-learn
+faiss-cpu
+numpy
+pandas
+groq
+transformers
+sentencepiece
+indic-nlp-library
+ctranslate2

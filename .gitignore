@@ -1,0 +1,27 @@
+# Virtual environment & compiled files
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Secrets — never commit
+.env
+
+# Database files
+data/*.db
+data/faiss_index/
+data/pipeline_checkpoints.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Node (frontend lands Day 10)
+node_modules/
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
