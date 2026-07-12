@@ -1,12 +1,5 @@
 [
   {
-    "name": "BBC News Top Stories",
-    "url": "http://feeds.bbci.co.uk/news/rss.xml",
-    "type": "rss",
-    "category": "national",
-    "language": "en"
-  },
-  {
     "name": "The Hindu - National",
     "url": "https://www.thehindu.com/news/national/feeder/default.rss",
     "type": "rss",
