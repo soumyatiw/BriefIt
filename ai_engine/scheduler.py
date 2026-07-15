@@ -21,7 +21,7 @@ def start_scheduler() -> BackgroundScheduler:
     scheduler.add_job(
         run_pipeline_job,
         "interval",
-        minutes=15,
+        minutes=2,
         id="briefit_pipeline",
         next_run_time=datetime.now(),  # fire once immediately on startup, then every 15 min
     )

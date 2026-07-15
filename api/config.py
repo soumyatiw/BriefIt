@@ -19,8 +19,10 @@ class Settings(BaseSettings):
     jwt_expire_minutes: int = 1440
 
     # Day 7+ (sentiment / summarization) — empty string is fine until then
-    groq_api_key: str = ""
-    groq_model: str = "llama-3.3-70b-versatile"
+    groq_api_key_sentiment: str = ""
+    groq_model_sentiment: str = "llama-3.1-8b-instant"
+    groq_api_key_summarize: str = ""
+    groq_model_summarize: str = "llama-3.3-70b-versatile"
     openai_api_key: str = ""
 
     model_config = SettingsConfigDict(env_file=".env")
