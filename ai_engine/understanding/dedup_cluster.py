@@ -1,8 +1,8 @@
 import numpy as np
 from sklearn.cluster import DBSCAN
 
-DBSCAN_EPS = 0.40          # tuned 2026-07-15: last eps with precision=1.000 before false positives appear; F1=0.857 on 46 hand-labeled articles
-MATCH_THRESHOLD = 0.75
+DBSCAN_EPS = 0.34          # tuned 2026-07-15: last eps with precision=1.000 before false positives appear; F1=0.771 on 64 hard-negative-inclusive articles (re-tuned after adding hard negatives for same-topic different-event pairs)
+MATCH_THRESHOLD = 0.80     # cosine similarity required to attach to an existing story; raised to match stricter eps
 
 
 def cluster_vectors(vectors: np.ndarray, eps: float = DBSCAN_EPS, min_samples: int = 1) -> np.ndarray:

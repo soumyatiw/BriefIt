@@ -20,6 +20,7 @@ class Settings(BaseSettings):
 
     # Day 7+ (sentiment / summarization) — empty string is fine until then
     groq_api_key: str = ""
+    groq_model: str = "llama-3.3-70b-versatile"
     openai_api_key: str = ""
 
     model_config = SettingsConfigDict(env_file=".env")

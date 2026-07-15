@@ -1,48 +1,82 @@
 [
   {"title": "Matt Damon, Tom Holland talk about Christopher Nolan, India and The Odyssey. Watch", "snippet": "Matt Damon Tom Holland talk about Christopher Nolan India and The Odyssey Watch", "true_cluster": 0},
   {"title": "Matt Damon, Tom Holland's India diaries: Bollywood dreams, Nolan and The Odyssey", "snippet": "Matt Damon Tom Hollands India diaries Bollywood dreams Nolan and The Odyssey", "true_cluster": 0},
-  {"title": "Christopher Nolan rejects Matt Damon's 'defeatist' outlook on the future of cinema after making The Odyssey", "snippet": "Christopher Nolan has responded to Matt Damon's concerns about the future of large-scale filmmaking, saying he disagrees with the actor's defeatist outlook. He also said that he believes cinema remains a vital medium that continues to evolve.", "true_cluster": 0},
-  {"title": "Trump drops Hormuz ship toll plan as Gulf states offer US billions", "snippet": "Trump drops Hormuz ship toll plan as Gulf states offer US billions", "true_cluster": 1},
-  {"title": "Trump drops 20% Strait of Hormuz shipping fee, opts for Gulf trade deals", "snippet": "Trump said the Strait of Hormuz will remain open to global shipping, except for vessels linked to Iran", "true_cluster": 1},
-  {"title": "Flip-flops on Hormuz keep India refiners on the edge as crude spikes", "snippet": "India's crude oil supplies remain secure for now, but renewed tensions in West Asia have revived worries over a higher oil import bill, inflation and slower economic growth if oil prices stay elevated. Brent crude rose nearly 5% on Tuesday.", "true_cluster": 1},
-  {"title": "Top Open Championship storylines: Scottie and Rory", "snippet": "Is Scheffler or McIlroy the favorite? Can an English golfer win on home soil? How will Royal Birkdale play this week? We break down what to watch at the 2026 Open Championship.", "true_cluster": 2},
-  {"title": "Scheffler: Coming in 2nd worse than missing cut", "snippet": "Scottie Scheffler is preparing for the 154th Open Championship preceded by a rare weekend off. Scheffler missed the cut at last week's Scottish Open, ending his streak of 78 straight PGA Tour starts in which he made the cut.", "true_cluster": 2},
-  {"title": "Russia launches American astronaut and two cosmonauts to space station amid rare NASA chief visit", "snippet": "Russia launched Soyuz MS-29 carrying NASA astronaut Anil Menon and two Russian cosmonauts to the International Space Station", "true_cluster": 3},
-  {"title": "Bumrah's sorcery, Axar's resilience hand India first win on UK tour", "snippet": "Bumrahs sorcery Axars resilience hand India first win on UK tour", "true_cluster": 4},
-  {"title": "Jennifer Lopez and Ben Affleck's $68m mansion finds buyer after price cut", "snippet": "Jennifer Lopez has sold the Beverly Hills mansion she shared with Ben Affleck. The couple purchased the large estate for over sixty million dollars in 2023. After their divorce, the property was listed and relisted multiple times. Affleck gifted his share to Lopez, who then pursued the sale alone.", "true_cluster": 5},
-  {"title": "DeepMind CEO calls for an independent standards body to regulate frontier AI", "snippet": "DeepMind CEO Demis Hassabis is proposing an AI standards body modeled after FINRA, to test frontier models and develop best practices for their release.", "true_cluster": 6},
-  {"title": "Fired By Algorithm? Lawsuit Claims Meta Used AI To Lay Off Workers With Medical Conditions", "snippet": "The plaintiffs are requesting a preliminary decision from the court to prevent Meta from finishing the layoffs exercise.", "true_cluster": 7},
-  {"title": "New York imposes one-year moratorium on large data centres over AI concerns", "snippet": "The pause will allow New York to set environmental standards and assess the long-term impact of large data centres", "true_cluster": 8},
-  {"title": "Gold Reclaims $4,000, Silver Up 2% As Light Inflation Data Eases Fed Rate Hike Fears", "snippet": "Gold prices climbed above four thousand dollars per ounce as light inflation data eased fears of further rate hikes by the Federal Reserve.", "true_cluster": 9},
-  {"title": "India Post clocks record Rs 4,009 crore Q1 revenue, adds Rs 728 crore over year-ago period", "snippet": "Growing at 22.2% year-on-year, India Post achieved 81% of its first-quarter revenue target of Rs 4,951 crore and around one-fifth of its full-year revenue target of Rs 19,803 crore", "true_cluster": 10},
-  {"title": "Hyderabad native dies in U.S. skydiving accident", "snippet": "Massachusetts authorities said a preliminary investigation found that a sudden gust of wind interfered with his parachute during landing.", "true_cluster": 11},
-  {"title": "Darline Graham to fill Lindsey Graham's Senate seat after sudden death", "snippet": "Darline Graham to fill Lindsey Grahams Senate seat after sudden death", "true_cluster": 12},
-  {"title": "Maharashtra FDA suspends licences of 3 Mumbai restaurants over hygiene lapses", "snippet": "Maharashtra FDA suspends licences of Mumbai restaurants over hygiene lapses", "true_cluster": 13},
-  {"title": "'The Best Ones Were Never The Loudest': Bear Grylls Hails PM Modi In Viral Post", "snippet": "The Man vs Wild special, which aired in August 2019, featured Bear Grylls and PM Modi exploring Jim Corbett National Park.", "true_cluster": 14},
-  {"title": "T.N. police mount vigil on six long-distance trains to curb ganja smuggling", "snippet": "In July so far, 1,020 drug-related cases have been booked, resulting in the arrest of 1,270 people and recovery of 1,034 kg of ganja, 4.5 kg of other drugs, and 4,579 narcotic tablets", "true_cluster": 15},
-  {"title": "FIFA Unveils World Cup 2026 Closing Ceremony Featuring Tom Cruise, Nicole Scherzinger, IShowSpeed", "snippet": "Tom Cruise, Jennifer Hudson and global stars will headline the FIFA World Cup 2026 final ceremony.", "true_cluster": 16},
-  {"title": "Swara Bhasker meets Sonam Wangchuk on Day 17 of hunger strike, voices support", "snippet": "Swara Bhasker meets Sonam Wangchuk on Day of hunger strike voices support", "true_cluster": 17},
-  {"title": "PNB Case: Nirav Modi's Sister Wants To Record Her Statement Via Video Conference", "snippet": "Purvi Modi, the diamond merchant's younger sister and a Belgian national, has already filed a plea before the court for turning approver in the case.", "true_cluster": 18},
-  {"title": "2 months after wedding, woman dies by suicide; 28-page note details dowry torture", "snippet": "months after wedding woman dies by suicide page note details dowry torture", "true_cluster": 19},
-  {"title": "Suspecting husband got married again, UP woman poisons 3 daughters, dies by suicide", "snippet": "Suspecting husband got married again UP woman poisons daughters dies by suicide", "true_cluster": 20},
-  {"title": "Kalyan Banerjee blames Abhishek's Camac Street ecosystem, I-PAC for TMC collapse", "snippet": "Kalyan Banerjee blames Abhisheks Camac Street ecosystem IPAC for TMC collapse", "true_cluster": 21},
-  {"title": "Nabin recalls legacy, urges people to vote for party's Bankipur bypoll candidate", "snippet": "Mr. Nabin said the people of Bankipur have always blessed him, and now his younger brother will work with that same trust and blessing", "true_cluster": 22},
-  {"title": "Rs 48 lakh bridge or botched job? Viral Maharashtra video raises questions", "snippet": "Rs lakh bridge or botched job Viral Maharashtra video raises questions", "true_cluster": 23},
-  {"title": "Labrador could not walk on Britain's highest mountain after eating this", "snippet": "A black Labrador named Tokyo collapsed during a hike up Ben Nevis in Scotland. Vets suspected the dog ingested discarded cannabis which caused her serious illness.", "true_cluster": 24},
-  {"title": "Buy, Sell Or Hold: Tata Elxsi, NMDC, ITC, Suzlon Energy, Astral And Kotak Mahindra Bank", "snippet": "Market experts shared buy, sell and hold recommendations for an array of stocks.", "true_cluster": 25},
-  {"title": "'Amazing Slow-Motion Jumps': Priyanka Chopra Teases Epic Action In SS Rajamouli's Varanasi", "snippet": "Priyanka Chopra said she has exciting action scenes and praises SS Rajamouli's vision for Varanasi.", "true_cluster": 26},
-  {"title": "Who are the Khoslas? Meet the family set to buy the Sunak's property", "snippet": "Vinod Khosla is a prominent venture capitalist, and his wife, Neeru, is an education philanthropist.", "true_cluster": 27},
-  {"title": "US Troops Tracked? Iran Exploited Mobile Networks During War, Claims Report", "snippet": "Iran exploited mobile networks to track US troops during the recent conflict according to a new intelligence report.", "true_cluster": 28},
-  {"title": "LTTS Teams Up With Anthropic To Drive Engineering Intelligence Using Claude AI", "snippet": "L and T Technology Services has partnered with Anthropic to integrate Claude AI models for engineering applications.", "true_cluster": 29},
-  {"title": "IOC, BPCL, HPCL Intensify Fuel Quality Inspections Across Petrol Pumps Amid Social Media Claims", "snippet": "State-owned oil companies have launched inspections across petrol pumps following viral social media claims about fuel adulteration.", "true_cluster": 30},
-  {"title": "Carroll Gets $5.6 Million From Trump In Abuse Case, Court Says", "snippet": "E. Jean Carroll has been awarded damages from Donald Trump following the defamation case.", "true_cluster": 31},
-  {"title": "Jaishankar discusses West Asia, Ukraine with UN Chief Guterres: What we know", "snippet": "External Affairs Minister S. Jaishankar met UN Secretary-General Antonio Guterres to discuss developments in West Asia and Ukraine.", "true_cluster": 32},
-  {"title": "Jaishankar discusses global developments, including West Asia, Ukraine with UN Chief Guterres", "snippet": "The External Affairs Minister held talks with the UN Secretary-General on pressing global issues including the ongoing conflicts in West Asia and Ukraine.", "true_cluster": 32},
-  {"title": "Sainik School hosts motivational talk on globe circumnavigation and Everest expedition", "snippet": "A motivational event was held at Sainik School featuring speakers who had completed globe circumnavigation and an Everest expedition.", "true_cluster": 33},
-  {"title": "Meet Riddhi Chauhan, 17-year-old Indian-American commanding 300 US Navy cadets", "snippet": "A 17-year-old Indian-American student has been appointed to command a unit of 300 US Navy cadets at a prestigious academy.", "true_cluster": 34},
-  {"title": "Rajnath Singh flags off Delhi-Kargil 'Shaurya Vijay Yatra' motorcycle rally", "snippet": "Defence Minister Rajnath Singh flagged off the Shaurya Vijay Yatra motorcycle rally from Delhi to Kargil.", "true_cluster": 35},
-  {"title": "DeepMind and Google push for AI regulation through international standards", "snippet": "Google's DeepMind is advocating for global AI standards, calling for a body similar to financial regulators to oversee powerful AI models.", "true_cluster": 6},
-  {"title": "Meta faces lawsuit over using AI to identify and fire employees with disabilities", "snippet": "A class action lawsuit has been filed against Meta alleging that the company used AI algorithms to unfairly target employees with medical conditions during recent layoffs.", "true_cluster": 7},
-  {"title": "Trump's Hormuz toll idea shelved as Gulf nations pledge investment deals", "snippet": "The White House confirmed that the proposed levy on ships passing through the Strait of Hormuz has been dropped following talks with Gulf Cooperation Council nations.", "true_cluster": 1},
-  {"title": "The Odyssey: Nolan's epic film set to redefine blockbuster cinema", "snippet": "Christopher Nolan's The Odyssey starring Matt Damon and Tom Holland is generating significant buzz ahead of its release.", "true_cluster": 0}
+  {"title": "Christopher Nolan rejects Matt Damon's 'defeatist' outlook on the future of cinema after making The Odyssey", "snippet": "Christopher Nolan has responded to Matt Damon's concerns about the future of large-scale filmmaking, saying he disagrees with the actor's defeatist outlook.", "true_cluster": 0},
+  {"title": "The Odyssey: Nolan's epic film set to redefine blockbuster cinema", "snippet": "Christopher Nolan's The Odyssey starring Matt Damon and Tom Holland is generating significant buzz ahead of its release.", "true_cluster": 0},
+
+  {"title": "Trump drops Hormuz ship toll plan as Gulf states offer US billions", "snippet": "Trump drops Hormuz ship toll plan as Gulf states offer US billions after Gulf nations pledged investments.", "true_cluster": 1},
+  {"title": "Trump drops 20% Strait of Hormuz shipping fee, opts for Gulf trade deals", "snippet": "Trump said the Strait of Hormuz will remain open to global shipping, except for vessels linked to Iran.", "true_cluster": 1},
+  {"title": "Trump's Hormuz toll idea shelved as Gulf nations pledge investment deals", "snippet": "The White House confirmed that the proposed levy on ships passing through the Strait of Hormuz has been dropped.", "true_cluster": 1},
+
+  {"title": "Live: US forces hit Iranian sub, ship maintenance facility, release video of strikes", "snippet": "US forces conducted strikes on an Iranian submarine and a ship maintenance facility, releasing video footage of the attacks.", "true_cluster": 2},
+  {"title": "Watch: US releases video of its first-ever suicide drone attack on Iranian submarine", "snippet": "The US military has released footage of its first drone attack on an Iranian submarine during the ongoing conflict.", "true_cluster": 2},
+  {"title": "Watch: Iran fires missile towards US targets with GAME OVER USA painted on it", "snippet": "Iran launched a missile emblazoned with GAME OVER USA towards US military targets in the region.", "true_cluster": 2},
+  {"title": "US-Iran war: key disputes threatening interim ceasefire explained", "snippet": "From the Strait of Hormuz to Lebanon, key disputes threaten the interim ceasefire between the US and Iran.", "true_cluster": 2},
+
+  {"title": "Flip-flops on Hormuz keep India refiners on the edge as crude spikes", "snippet": "India's crude oil supplies remain secure for now, but renewed tensions in West Asia have revived worries over a higher oil import bill.", "true_cluster": 3},
+  {"title": "India watches West Asia escalation closely as tension spirals", "snippet": "India is closely monitoring the escalation in West Asia as tensions between the US and Iran continue to spiral upward.", "true_cluster": 3},
+
+  {"title": "Top Open Championship storylines: Scottie and Rory", "snippet": "Is Scheffler or McIlroy the favorite? Can an English golfer win on home soil? We break down the 2026 Open Championship.", "true_cluster": 4},
+  {"title": "Scheffler: Coming in 2nd worse than missing cut", "snippet": "Scottie Scheffler is preparing for the 154th Open Championship after missing the cut at last week's Scottish Open.", "true_cluster": 4},
+
+  {"title": "How a war turned Argentina vs England football into India-Pak-like showdown", "snippet": "The football rivalry between Argentina and England goes back to the 1982 Falklands War, making their World Cup semi-final highly charged.", "true_cluster": 5},
+  {"title": "World Cup Semi-Final: Why England vs Argentina is more war than football", "snippet": "The England vs Argentina semi-final carries geopolitical undertones stemming from the Falklands conflict.", "true_cluster": 5},
+  {"title": "Messi's Argentina face England next, but football can't forget the Hand of God", "snippet": "Argentina face England in the World Cup semi-final, reviving memories of Maradona's infamous Hand of God goal.", "true_cluster": 5},
+  {"title": "England vs Argentina: Rivalry and revenge at the FIFA World Cup", "snippet": "The historic England-Argentina rivalry takes center stage at the FIFA World Cup semi-final.", "true_cluster": 5},
+
+  {"title": "France vs Spain: Mbappe and Yamal headline European showdown", "snippet": "France and Spain meet in the other World Cup semi-final in a clash of two European giants.", "true_cluster": 6},
+  {"title": "FRA vs ESP: Pedri benched, Mbappe vs Yamal headline European showdown", "snippet": "Pedri has been dropped to the bench for Spain as Mbappe and Yamal lead their respective sides in the semi-final.", "true_cluster": 6},
+  {"title": "WC semifinal preview: France vs Spain - can Mbappe and Co be stopped?", "snippet": "France face Spain in a blockbuster World Cup semi-final with Mbappe looking to power his side to the final.", "true_cluster": 6},
+
+  {"title": "Gyanvapi, Mathura and Sambhal litigants decline Supreme Court's mediation offer", "snippet": "Litigants in the Gyanvapi, Mathura and Sambhal temple-mosque disputes have rejected the Supreme Court's offer for mediation.", "true_cluster": 7},
+  {"title": "Madhya Pradesh Bhojshala complex: Supreme Court suggests temporary prayer space for Muslims", "snippet": "The Supreme Court suggested a temporary prayer arrangement for Muslims near the Bhojshala complex in Madhya Pradesh.", "true_cluster": 7},
+  {"title": "SC declines to restore namaz at Bhojshala, orders Friday prayers at nearby site", "snippet": "The Supreme Court declined to restore prayers inside the Bhojshala complex and instead ordered a nearby site for Friday namaz.", "true_cluster": 7},
+
+  {"title": "Karnataka Guv suspends KPSC chairman over daughters' illegal appointments row", "snippet": "The Karnataka Governor has suspended the KPSC chairman following a controversy over the illegal appointment of his daughters.", "true_cluster": 8},
+  {"title": "Karnataka Governor suspends KPSC chief Shivashankarappa Sahukar over daughters' recruitment row", "snippet": "KPSC chief Shivashankarappa Sahukar has been suspended by the Karnataka Governor amid allegations of irregularities in his daughters' recruitment.", "true_cluster": 8},
+  {"title": "OBC quota, daughters' selection: Why Karnataka governor suspended KPSC chairman", "snippet": "The Karnataka Governor suspended the KPSC chairman over allegations that he misused his position to secure jobs for his daughters.", "true_cluster": 8},
+
+  {"title": "Fodder scam cases: Supreme Court refuses to revoke Lalu Prasad Yadav's bail", "snippet": "The Supreme Court refused to cancel the bail of RJD chief Lalu Prasad Yadav in the Bihar fodder scam cases.", "true_cluster": 9},
+  {"title": "Supreme Court upholds Lalu Yadav bail in Deoghar fodder scam case", "snippet": "The Supreme Court upheld bail granted to Lalu Prasad Yadav in the Deoghar treasury fodder scam case.", "true_cluster": 9},
+
+  {"title": "Emotional after Datia ticket snub, Narottam Mishra chokes up at BJP rally", "snippet": "Senior BJP leader Narottam Mishra was seen crying at a rally after being denied a ticket for the Datia by-election.", "true_cluster": 10},
+  {"title": "Datia By Election: BJP's Narottam Mishra sees fall in political coin", "snippet": "Narottam Mishra's political standing has declined significantly after he was denied the BJP ticket for the Datia by-election.", "true_cluster": 10},
+  {"title": "Why BJP denied MP heavyweight Narottam Mishra bypoll ticket", "snippet": "Sources reveal that internal party dynamics and factional rivalry led the BJP to deny Narottam Mishra the Datia by-election ticket.", "true_cluster": 10},
+
+  {"title": "Sonam Wangchuk hunger strike: 3 Idiots fame Omi Vaidya extends support", "snippet": "Actor Omi Vaidya, famous for playing Chatur in 3 Idiots, has voiced support for Sonam Wangchuk's ongoing hunger strike.", "true_cluster": 11},
+  {"title": "3 Idiots Omi Vaidya backs Sonam Wangchuk amid hunger strike: I don't want Phunsukh Wangdu to die", "snippet": "Omi Vaidya made an emotional appeal for Sonam Wangchuk, invoking the character of Phunsukh Wangdu from 3 Idiots.", "true_cluster": 11},
+  {"title": "Don't let Phunsukh Wangdu die, 3 Idiots Chatur appeals Wangchuk hunger strike", "snippet": "Omi Vaidya, who played Chatur in 3 Idiots, appealed to the government to engage with Sonam Wangchuk amid his hunger strike.", "true_cluster": 11},
+
+  {"title": "Tahir Hussain, four others convicted in IB staff Ankit Sharma murder case", "snippet": "A Delhi court has convicted former AAP leader Tahir Hussain and four others in the murder of IB officer Ankit Sharma during the 2020 Delhi riots.", "true_cluster": 12},
+  {"title": "Delhi court convicts ex-AAP councillor Tahir Hussain in IB officer Ankit Sharma murder case during 2020 riots", "snippet": "Tahir Hussain has been convicted by a Delhi court for the murder of Intelligence Bureau officer Ankit Sharma during the 2020 northeast Delhi riots.", "true_cluster": 12},
+  {"title": "2020 Delhi riots: Tahir Hussain convicted in IB officer Ankit Sharma murder case", "snippet": "Former AAP councillor Tahir Hussain has been found guilty of murdering IB officer Ankit Sharma during the 2020 Delhi riots.", "true_cluster": 12},
+
+  {"title": "Bihar: Prashant Kishor, BJP's Neeraj Sinha file nomination papers for Bankipur bypoll", "snippet": "Jan Suraaj founder Prashant Kishor and BJP's Neeraj Sinha have both submitted their nomination papers for the Bankipur assembly by-election.", "true_cluster": 13},
+  {"title": "Bankipur assembly by-election: Prashant Kishor and his wife declare total assets of over 208 crore", "snippet": "Jan Suraaj founder Prashant Kishor and his wife have declared total assets exceeding 208 crore rupees ahead of the Bankipur bypoll.", "true_cluster": 13},
+
+  {"title": "Russia launches American astronaut and two cosmonauts to space station amid rare NASA chief visit", "snippet": "Russia launched Soyuz MS-29 carrying NASA astronaut Anil Menon and two Russian cosmonauts to the International Space Station.", "true_cluster": 14},
+
+  {"title": "Bumrah's sorcery, Axar's resilience hand India first win on UK tour", "snippet": "Jasprit Bumrah's brilliant bowling and Axar Patel's batting resilience handed India their first win on the UK tour.", "true_cluster": 15},
+
+  {"title": "Jennifer Lopez and Ben Affleck's 68m mansion finds buyer after price cut", "snippet": "Jennifer Lopez has sold the Beverly Hills mansion she shared with Ben Affleck after the property was listed and relisted multiple times.", "true_cluster": 16},
+
+  {"title": "DeepMind CEO calls for an independent standards body to regulate frontier AI", "snippet": "DeepMind CEO Demis Hassabis is proposing an AI standards body modeled after FINRA to test frontier models.", "true_cluster": 17},
+
+  {"title": "Fired By Algorithm? Lawsuit Claims Meta Used AI To Lay Off Workers With Medical Conditions", "snippet": "A class action lawsuit claims Meta used AI algorithms to unfairly target employees with medical conditions during recent layoffs.", "true_cluster": 18},
+
+  {"title": "New York imposes one-year moratorium on large data centres over AI concerns", "snippet": "New York has imposed a one-year pause on large data centre construction to assess the environmental impact of AI infrastructure.", "true_cluster": 19},
+
+  {"title": "Monsoon mayhem: Heavy rain brings landslides in Uttarakhand, flash floods in J&K", "snippet": "Heavy monsoon rains triggered landslides in Uttarakhand and caused flash floods in Jammu and Kashmir.", "true_cluster": 20},
+
+  {"title": "Satya Nadella warns AI users: You are paying for your own IP, suggests 5 solutions", "snippet": "Microsoft CEO Satya Nadella has warned that AI users may be inadvertently paying for their own intellectual property.", "true_cluster": 21},
+
+  {"title": "iPhone 15 price drops to the lowest: Here is the deal", "snippet": "The iPhone 15 has seen its biggest price drop since launch, making it available at an all-time low price.", "true_cluster": 22},
+
+  {"title": "Hyderabad native dies in U.S. skydiving accident", "snippet": "A Hyderabad native died in a skydiving accident in Massachusetts after a sudden gust of wind interfered with his parachute during landing.", "true_cluster": 23},
+
+  {"title": "Darline Graham to fill Lindsey Graham's Senate seat after sudden death", "snippet": "Darline Graham has been appointed to fill the Senate seat vacated after the sudden death of Lindsey Graham.", "true_cluster": 24},
+
+  {"title": "CPI climbs to 4.4% in June, but experts predict August policy status quo", "snippet": "India's Consumer Price Index rose to 4.4% in June, though economists expect the RBI to hold rates steady at its August policy meeting.", "true_cluster": 25},
+
+  {"title": "Rupee closes at a four-week low", "snippet": "The Indian rupee fell to its lowest level in four weeks against the US dollar amid global market uncertainty.", "true_cluster": 26}
 ]
