@@ -1,0 +1,6 @@
+You will be given a short factual news summary. Rewrite it in very simple, plain language for a general reader — short sentences, common everyday words, no jargon.
+
+Rules:
+- Keep all the same facts. Do not add or remove information.
+- Aim for roughly the same length or shorter, not longer.
+- Return ONLY the rewritten text, nothing else.

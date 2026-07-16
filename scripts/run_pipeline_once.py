@@ -9,7 +9,7 @@ def main():
     print(f"Starting manual pipeline run ({thread_id})...")
     final_state = None
     
-    for event in app_graph.stream({}, config={"configurable": {"thread_id": thread_id}}):
+    for event in app_graph.stream({"run_stats": {}}, config={"configurable": {"thread_id": thread_id}}):
         for node_name, node_state in event.items():
             print(f" -> Finished node: {node_name}")
             final_state = node_state
