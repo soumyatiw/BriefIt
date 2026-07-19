@@ -1,7 +1,9 @@
 """
-GET /feed?lang=en&category=technology
-Returns stories that have at least one English summary (i.e. have been processed
-by the pipeline). Filters out unsummarized stories so the feed never shows blanks.
+GET /feed?lang=en&category=technology&offset=0&limit=20
+Returns stories that have at least one English summary (pipeline-processed only).
+Supports pagination via offset for the "Load more" button.
+
+GET /feed/total — returns the total count of summarized stories for pagination math.
 """
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy import func, select
@@ -15,22 +17,40 @@ from api.security import get_current_user_id_optional
 router = APIRouter(prefix="/feed", tags=["feed"])
 
 VALID_LANGS = {"en", "hi", "ta", "te"}
+PAGE_SIZE   = 20
+
+
+@router.get("/total")
+def get_feed_total(
+    category: str | None = Query(None),
+    db: Session = Depends(get_db),
+):
+    """Returns the total count of summarized stories — used by the frontend to decide
+    whether to show the Load More button."""
+    summarized_ids_subq = (
+        db.query(Summary.story_id).filter(Summary.language == "en").subquery()
+    )
+    q = db.query(func.count(Story.id)).filter(Story.id.in_(select(summarized_ids_subq)))
+    if category:
+        q = q.filter(Story.category == category)
+    total = q.scalar() or 0
+    return {"total": total}
 
 
 @router.get("")
 def get_feed(
     lang: str = Query("en"),
     category: str | None = Query(None),
-    limit: int = Query(20, le=50),
+    limit: int = Query(PAGE_SIZE, le=50),
     offset: int = Query(0, ge=0),
     db: Session = Depends(get_db),
-    user_id: int | None = Depends(get_current_user_id_optional),  # feed works logged-out too
+    user_id: int | None = Depends(get_current_user_id_optional),
 ):
     if lang not in VALID_LANGS:
         lang = "en"
 
-    # Only surface stories that have at least one English summary — i.e. the pipeline
-    # has finished processing them.  Stories ingested but not yet summarized are hidden.
+    # Only show stories that have at least one English summary row.
+    # Stories ingested but not yet summarized are invisible until the pipeline finishes them.
     summarized_ids_subq = (
         db.query(Summary.story_id)
         .filter(Summary.language == "en")
@@ -45,6 +65,7 @@ def get_feed(
     if category:
         query = query.filter(Story.category == category)
 
+    total = query.count()
     stories = query.offset(offset).limit(limit).all()
 
     results = []
@@ -66,14 +87,21 @@ def get_feed(
         source_count = source_count_row or 0
 
         results.append({
-            "id": story.id,
-            "title": story.canonical_title,
-            "category": story.category,
-            "sentiment": story.sentiment,
-            "summary": summary.text if summary else "",
-            "language": summary.language if summary else lang,
+            "id":           story.id,
+            "title":        story.canonical_title,
+            "category":     story.category,
+            "sentiment":    story.sentiment,
+            "summary":      summary.text if summary else "",
+            "language":     summary.language if summary else lang,
             "source_count": source_count,
-            "created_at": story.created_at.isoformat(),
+            "created_at":   story.created_at.isoformat(),
         })
 
-    return {"stories": results, "count": len(results), "offset": offset}
+    has_more = (offset + len(results)) < total
+    return {
+        "stories":  results,
+        "count":    len(results),
+        "offset":   offset,
+        "total":    total,
+        "has_more": has_more,
+    }

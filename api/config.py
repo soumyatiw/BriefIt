@@ -22,7 +22,7 @@ class Settings(BaseSettings):
     groq_api_key_sentiment: str = ""
     groq_model_sentiment: str = "llama-3.1-8b-instant"
     groq_api_key_summarize: str = ""
-    groq_model_summarize: str = "llama-3.3-70b-versatile"
+    groq_model_summarize: str = "llama3-8b-8192"   # 8B → much higher free-tier TPM than 70B
     openai_api_key: str = ""
 
     model_config = SettingsConfigDict(env_file=".env")

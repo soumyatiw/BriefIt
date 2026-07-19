@@ -1,3 +1,4 @@
+# ── Web Framework ─────────────────────────────────────────────────────────────
 fastapi
 uvicorn[standard]
 sqlalchemy
@@ -8,23 +9,25 @@ passlib[bcrypt]
 bcrypt==4.0.1
 python-multipart
 apscheduler
+
+# ── Scraping & Ingestion ──────────────────────────────────────────────────────
 feedparser
 requests
 beautifulsoup4
 lxml
 email-validator
 
+# ── AI / NLP Pipeline ─────────────────────────────────────────────────────────
 langgraph
 langchain-core
 langgraph-checkpoint-sqlite
-sentence-transformers
-torch
-scikit-learn
-faiss-cpu
+sentence-transformers       # article embeddings
+torch                       # required by sentence-transformers
+scikit-learn                # DBSCAN clustering
+faiss-cpu                   # vector similarity search
 numpy
-pandas
-groq
-transformers
-sentencepiece
-indic-nlp-library
-ctranslate2
+groq                        # LLM API (summarization + sentiment)
+transformers                # tokenizers used by sentence-transformers
+
+# ── Translation ───────────────────────────────────────────────────────────────
+deep-translator             # Google Translate wrapper — instant, no quota, no key needed

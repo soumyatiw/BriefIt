@@ -12,9 +12,9 @@ from ai_engine.state import PipelineState
 
 logger = logging.getLogger("briefit.summarize_node")
 
-REQUEST_INTERVAL = 2.1
-MAX_CONSECUTIVE_FAILURES = 3
-BATCH_SIZE = 50
+REQUEST_INTERVAL = 3.0          # seconds between Groq calls — stays within free-tier rate limit
+MAX_CONSECUTIVE_FAILURES = 3    # stop early if quota is clearly exhausted
+BATCH_SIZE = 10                 # stories to summarize per pipeline run (≈20 LLM calls/hr)
 
 
 def summarize_node(state: PipelineState) -> dict:
@@ -33,8 +33,9 @@ def summarize_node(state: PipelineState) -> dict:
         pending = pending[:BATCH_SIZE]
 
         logger.info(
-            "summarize_node: %d stories already summarized, %d pending",
+            "summarize_node: %d already done, %d pending, processing %d this run",
             len(stories_with_en_summary),
+            len(db.query(Story).all()) - len(stories_with_en_summary),
             len(pending),
         )
 
@@ -61,8 +62,8 @@ def summarize_node(state: PipelineState) -> dict:
                 consecutive_failures += 1
                 if consecutive_failures >= MAX_CONSECUTIVE_FAILURES:
                     logger.warning(
-                        "summarize_node: %d consecutive failures — daily LLM quota likely "
-                        "exhausted. Stopping early. Remaining stories will be retried next run.",
+                        "summarize_node: %d consecutive failures — quota likely exhausted. "
+                        "Stopping early; remaining stories retry next run.",
                         consecutive_failures,
                     )
                     break
@@ -82,13 +83,12 @@ def summarize_node(state: PipelineState) -> dict:
             )
             summarized += 1
             db.commit()
+            logger.info("story_id=%d summarized (%d words)", story.id, len(summary_text.split()))
 
     finally:
         db.close()
 
-    logger.info(
-        "summarize_node complete: summarized=%d failed=%d", summarized, failed
-    )
+    logger.info("summarize_node done: summarized=%d failed=%d", summarized, failed)
     run_stats["summarized"] = summarized
     run_stats["summarize_failed"] = failed
     return {"run_stats": run_stats}
