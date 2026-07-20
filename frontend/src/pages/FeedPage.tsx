@@ -123,16 +123,18 @@ export default function FeedPage() {
     setSearchQuery(query);
     setNewCount(0);
     try {
-      const res = await client.get("/search", { params: { q: query } });
+      const res = await client.get("/search", { params: { q: query, lang } });
       const mapped: StoryPreview[] = res.data.results.map((r: Record<string, unknown>) => ({
         id:           r.id as number,
-        title:        (r.canonical_title as string) ?? (r.title as string) ?? "",
-        category:     (r.category as string) ?? "",
+        title:        (r.title as string) ?? (r.canonical_title as string) ?? "",
+        category:     (r.category as string) ?? "general",
         sentiment:    (r.sentiment as string) ?? "Neutral",
-        summary:      "",
-        language:     "en",
-        source_count: 0,
-        created_at:   new Date().toISOString(),
+        summary:      (r.summary as string) ?? "",
+        language:     (r.language as string) ?? "en",
+        source_count: (r.source_count as number) ?? 0,
+        created_at:   (r.created_at as string) ?? new Date().toISOString(),
+        published_at: (r.published_at as string) ?? (r.created_at as string),
+        sources:      (r.sources as StoryPreview["sources"]) ?? [],
       }));
       setStories(mapped);
       setHasMore(false);

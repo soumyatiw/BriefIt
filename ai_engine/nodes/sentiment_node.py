@@ -8,6 +8,7 @@ from api.database import SessionLocal
 from api.models.article import Article
 from api.models.story import Story, story_articles
 from ai_engine.understanding.sentiment import analyze_sentiment
+from ai_engine.understanding.classifier import classify_category
 from ai_engine.state import PipelineState
 
 logger = logging.getLogger("briefit.sentiment_node")
@@ -62,6 +63,12 @@ def sentiment_node(state: PipelineState) -> dict:
             result = analyze_sentiment(story_dict)
             story.sentiment = result.sentiment
             story.perspective_note = result.perspective_note
+
+            # Classify category from article titles + text (keyword-based, no LLM call)
+            all_titles = " ".join(m.title or "" for m in members)
+            all_text   = " ".join((m.clean_text or "")[:300] for m in members)
+            story.category = classify_category(all_titles, all_text)
+
             tagged_count += 1
             time.sleep(REQUEST_INTERVAL)
 

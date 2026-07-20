@@ -91,17 +91,21 @@ def get_feed(
             .first()
         )
 
-        source_count_row = db.execute(
-            select(func.count()).where(sa_table.c.story_id == story.id)
-        ).scalar()
-        source_count = source_count_row or 0
-
-        # Get the most-recent article date for this story for display
-        latest_pub = db.execute(
-            select(func.max(Article.published_at))
-            .where(sa_table.c.story_id == story.id)
-            .where(Article.id == sa_table.c.article_id)
-        ).scalar()
+        # Fetch member articles with their source names for the sources chip
+        member_articles = (
+            db.query(Article)
+            .join(sa_table, sa_table.c.article_id == Article.id)
+            .filter(sa_table.c.story_id == story.id)
+            .order_by(Article.published_at.desc())
+            .all()
+        )
+        sources_list = [
+            {"name": a.source.name, "url": a.url, "title": a.title}
+            for a in member_articles
+            if a.source
+        ]
+        pub_dates = [a.published_at for a in member_articles if a.published_at]
+        latest_pub = max(pub_dates) if pub_dates else None
 
         results.append({
             "id":           story.id,
@@ -110,9 +114,10 @@ def get_feed(
             "sentiment":    story.sentiment,
             "summary":      summary.text if summary else "",
             "language":     summary.language if summary else lang,
-            "source_count": source_count,
+            "source_count": len(sources_list),
             "created_at":   story.created_at.isoformat(),
             "published_at": latest_pub.isoformat() if latest_pub else story.created_at.isoformat(),
+            "sources":      sources_list,
         })
 
     has_more = (offset + len(results)) < total
