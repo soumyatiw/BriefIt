@@ -6,7 +6,7 @@ Supports pagination via offset for the "Load more" button.
 GET /feed/total — returns the total count of summarized stories for pagination math.
 """
 from fastapi import APIRouter, Depends, Query
-from sqlalchemy import func, select
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from api.database import get_db
@@ -28,10 +28,10 @@ def get_feed_total(
 ):
     """Returns the total count of summarized stories — used by the frontend to decide
     whether to show the Load More button."""
-    summarized_ids_subq = (
-        db.query(Summary.story_id).filter(Summary.language == "en").subquery()
+    q = (
+        db.query(func.count(Story.id))
+        .join(Summary, (Summary.story_id == Story.id) & (Summary.language == "en"))
     )
-    q = db.query(func.count(Story.id)).filter(Story.id.in_(select(summarized_ids_subq)))
     if category:
         q = q.filter(Story.category == category)
     total = q.scalar() or 0
@@ -50,13 +50,7 @@ def get_feed(
     if lang not in VALID_LANGS:
         lang = "en"
 
-    # Only show stories that have at least one English summary row.
-    # Stories ingested but not yet summarized are invisible until the pipeline finishes them.
-    summarized_ids_subq = (
-        db.query(Summary.story_id)
-        .filter(Summary.language == "en")
-        .subquery()
-    )
+
 
     # Sort by the most recent article published_at within each story,
     # so truly fresh stories always float to the top of the feed.
@@ -66,10 +60,12 @@ def get_feed(
         .group_by(sa_table.c.story_id)
         .subquery()
     )
+
+    # Inner-join to summaries — only stories WITH an English summary row are included.
     query = (
         db.query(Story)
+        .join(Summary, (Summary.story_id == Story.id) & (Summary.language == "en"))
         .outerjoin(latest_article_date, latest_article_date.c.story_id == Story.id)
-        .filter(Story.id.in_(select(summarized_ids_subq)))
         .order_by(latest_article_date.c.latest.desc().nullslast(), Story.created_at.desc())
     )
     if category:

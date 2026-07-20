@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { LogOut, Bookmark, RefreshCw, ChevronDown, AlertTriangle, Inbox, ArrowUp } from "lucide-react";
 import client from "../api/client";
 import SummaryCard, { StoryPreview } from "../components/SummaryCard";
 import LanguageToggle from "../components/LanguageToggle";
@@ -164,13 +165,22 @@ export default function FeedPage() {
             <p className="text-[11px] text-teal font-medium">Your news, distilled</p>
           </div>
         </div>
-        <button
-          id="logout-btn"
-          onClick={handleLogout}
-          className="text-sm text-teal hover:text-ocean font-medium transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-teallt/20"
-        >
-          <span>↪</span> Log out
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => navigate("/saved")}
+            className="flex items-center gap-1.5 text-sm text-teal hover:text-ocean font-medium transition-colors px-3 py-1.5 rounded-lg hover:bg-teallt/20"
+          >
+            <Bookmark size={15} />
+            Saved
+          </button>
+          <button
+            id="logout-btn"
+            onClick={handleLogout}
+            className="text-sm text-teal hover:text-ocean font-medium transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-teallt/20"
+          >
+            <LogOut size={15} /> Log out
+          </button>
+        </div>
       </header>
 
       {/* ── Controls ── */}
@@ -185,7 +195,7 @@ export default function FeedPage() {
               className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all ${
                 category === c.value
                   ? "bg-ocean text-white shadow-sm"
-                  : "bg-ivory border border-teal/30 text-ocean hover:border-ocean hover:bg-teallt/20"
+                  : "bg-white/70 border border-teal/30 text-ocean hover:border-ocean hover:bg-teallt/20"
               }`}
             >
               {c.label}
@@ -203,7 +213,7 @@ export default function FeedPage() {
           onClick={() => fetchFeed(true)}
           className="w-full mb-4 py-2.5 rounded-xl bg-ocean/10 border border-ocean/30 text-ocean text-sm font-semibold hover:bg-ocean/20 transition-all flex items-center justify-center gap-2"
         >
-          <span>↑</span> {newCount} new {newCount === 1 ? "story" : "stories"} — tap to refresh
+          <ArrowUp size={14} /> {newCount} new {newCount === 1 ? "story" : "stories"} — tap to refresh
         </button>
       )}
 
@@ -216,7 +226,7 @@ export default function FeedPage() {
           </p>
           <button
             onClick={() => fetchFeed(true)}
-            className="text-xs font-semibold text-ocean bg-ivory border border-ocean/20 px-3 py-1 rounded-lg hover:bg-teallt/20 transition"
+            className="text-xs font-semibold text-ocean bg-white/70 border border-ocean/20 px-3 py-1 rounded-lg hover:bg-teallt/20 transition"
           >
             ← Back to feed
           </button>
@@ -247,7 +257,7 @@ export default function FeedPage() {
       {/* ── Error ── */}
       {!loading && error && (
         <div className="flex items-center gap-3 bg-red-50 border border-red-200 rounded-2xl px-5 py-4">
-          <span className="text-2xl">⚠️</span>
+          <AlertTriangle size={20} className="text-red-500 flex-shrink-0" />
           <p className="text-red-700 text-sm">{error}</p>
         </div>
       )}
@@ -255,7 +265,9 @@ export default function FeedPage() {
       {/* ── Empty state ── */}
       {!loading && !error && stories.length === 0 && (
         <div className="text-center py-24 flex flex-col items-center gap-3">
-          <div className="w-16 h-16 rounded-2xl bg-teallt/30 flex items-center justify-center text-3xl">📭</div>
+          <div className="w-16 h-16 rounded-2xl bg-teallt/30 flex items-center justify-center">
+            <Inbox size={28} className="text-teal/50" />
+          </div>
           <p className="text-ocean font-semibold text-lg">No stories found</p>
           <p className="text-teal text-sm">
             {searchMode
@@ -278,8 +290,19 @@ export default function FeedPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {stories.map((story) => (
-              <SummaryCard key={story.id} story={story} />
+            {stories.map((story, idx) => (
+              <SummaryCard
+                key={story.id}
+                story={story}
+                onNavigate={() =>
+                  navigate(`/story/${story.id}`, {
+                    state: {
+                      storyIds: stories.map((s) => s.id),
+                      currentIndex: idx,
+                    },
+                  })
+                }
+              />
             ))}
           </div>
 
@@ -295,15 +318,9 @@ export default function FeedPage() {
                            disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {loadingMore ? (
-                  <>
-                    <span className="animate-spin">⟳</span>
-                    Loading…
-                  </>
+                  <><RefreshCw size={16} className="animate-spin" /> Loading…</>
                 ) : (
-                  <>
-                    <span>↓</span>
-                    Load more stories
-                  </>
+                  <><ChevronDown size={16} /> Load more stories</>
                 )}
               </button>
             </div>
@@ -313,7 +330,7 @@ export default function FeedPage() {
           {!searchMode && !hasMore && stories.length > 0 && (
             <p className="text-center text-xs text-teal/60 mt-8 pb-4">
               You've seen all {total} available stories.
-              The pipeline adds more every hour. ✓
+              The pipeline adds more every hour.
             </p>
           )}
         </>

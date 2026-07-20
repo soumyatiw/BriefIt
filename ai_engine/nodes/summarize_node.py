@@ -1,6 +1,7 @@
 import logging
 import time
 
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from api.database import SessionLocal
@@ -29,13 +30,28 @@ def summarize_node(state: PipelineState) -> dict:
             row[0]
             for row in db.query(Summary.story_id).filter(Summary.language == "en").all()
         }
-        pending = [s for s in db.query(Story).all() if s.id not in stories_with_en_summary]
-        pending = pending[:BATCH_SIZE]
+
+        # Order by the most recent article date so newest news is always summarized first.
+        latest_pub_subq = (
+            db.query(story_articles.c.story_id,
+                     func.max(Article.published_at).label("latest"))
+            .join(Article, Article.id == story_articles.c.article_id)
+            .group_by(story_articles.c.story_id)
+            .subquery()
+        )
+        pending = (
+            db.query(Story)
+            .outerjoin(latest_pub_subq, latest_pub_subq.c.story_id == Story.id)
+            .filter(Story.id.notin_(stories_with_en_summary))
+            .order_by(latest_pub_subq.c.latest.desc().nullslast())
+            .limit(BATCH_SIZE)
+            .all()
+        )
 
         logger.info(
             "summarize_node: %d already done, %d pending, processing %d this run",
             len(stories_with_en_summary),
-            len(db.query(Story).all()) - len(stories_with_en_summary),
+            db.query(Story).count() - len(stories_with_en_summary),
             len(pending),
         )
 

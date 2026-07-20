@@ -1,7 +1,5 @@
 from datetime import datetime
-
 from sqlalchemy.orm import Session
-
 from api.database import SessionLocal
 from api.models.source import Source
 from api.models.article import Article

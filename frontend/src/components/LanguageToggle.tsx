@@ -12,7 +12,7 @@ const LANGUAGES = [
 
 export default function LanguageToggle({ value, onChange }: LanguageToggleProps) {
   return (
-    <div className="inline-flex rounded-xl border border-teal/40 bg-ivory overflow-hidden shadow-sm">
+    <div className="inline-flex rounded-xl border border-teal/40 bg-white/70 overflow-hidden shadow-sm">
       {LANGUAGES.map((lang, i) => (
         <button
           key={lang.code}

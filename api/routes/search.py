@@ -74,6 +74,7 @@ def search_stories(
                 SELECT s.id
                 FROM stories_fts f
                 JOIN stories s ON s.id = f.rowid
+                JOIN summaries su ON su.story_id = s.id AND su.language = 'en'
                 WHERE stories_fts MATCH :q
                 ORDER BY rank
                 LIMIT 20
@@ -82,7 +83,6 @@ def search_stories(
         ).fetchall()
         if rows:
             ids = [r[0] for r in rows]
-            # Preserve FTS rank order
             id_order = {sid: i for i, sid in enumerate(ids)}
             fetched = db.query(Story).filter(Story.id.in_(ids)).all()
             stories = sorted(fetched, key=lambda s: id_order.get(s.id, 999))
@@ -92,6 +92,7 @@ def search_stories(
     if not stories:
         stories = (
             db.query(Story)
+            .join(Summary, (Summary.story_id == Story.id) & (Summary.language == "en"))
             .filter(Story.canonical_title.ilike(f"%{q}%"))
             .limit(20)
             .all()

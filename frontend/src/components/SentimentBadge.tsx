@@ -5,7 +5,7 @@ interface SentimentBadgeProps {
 const STYLES: Record<string, string> = {
   Positive: "bg-ocean/10 text-ocean border-ocean/30",
   Neutral:  "bg-teal/10 text-teal border-teal/40",
-  Negative: "bg-red-100 text-red-700 border-red-200",
+  Negative: "bg-[#FDE8EE] text-[#B31846] border-[#FCB1C8]",
 };
 
 const ICONS: Record<string, string> = {
