@@ -10,6 +10,7 @@ export interface StoryPreview {
   language: string;
   source_count: number;
   created_at: string;
+  published_at?: string;
 }
 
 const CATEGORY_ICONS: Record<string, string> = {
@@ -60,7 +61,17 @@ export default function SummaryCard({ story }: { story: StoryPreview }) {
           <span>📰</span>
           {story.source_count} source{story.source_count !== 1 ? "s" : ""}
         </span>
-        <span>{new Date(story.created_at).toLocaleDateString(undefined, { month: "short", day: "numeric" })}</span>
+        <span>{(() => {
+            const date = new Date(story.published_at || story.created_at);
+            const diffMs = Date.now() - date.getTime();
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHrs = Math.floor(diffMins / 60);
+            const diffDays = Math.floor(diffHrs / 24);
+            if (diffMins < 60) return `${diffMins}m ago`;
+            if (diffHrs < 24) return `${diffHrs}h ago`;
+            if (diffDays === 1) return `Yesterday`;
+            return date.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+          })()}</span>
       </div>
     </article>
   );

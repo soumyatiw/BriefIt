@@ -14,7 +14,7 @@ logger = logging.getLogger("briefit.summarize_node")
 
 REQUEST_INTERVAL = 3.0          # seconds between Groq calls — stays within free-tier rate limit
 MAX_CONSECUTIVE_FAILURES = 3    # stop early if quota is clearly exhausted
-BATCH_SIZE = 10                 # stories to summarize per pipeline run (≈20 LLM calls/hr)
+BATCH_SIZE = 20                 # stories to summarize per pipeline run (≈40 LLM calls/hr)
 
 
 def summarize_node(state: PipelineState) -> dict:

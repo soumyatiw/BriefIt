@@ -10,6 +10,7 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from api.database import get_db
+from api.models.article import Article
 from api.models.story import Story, story_articles as sa_table
 from api.models.summary import Summary
 from api.security import get_current_user_id_optional
@@ -57,10 +58,19 @@ def get_feed(
         .subquery()
     )
 
+    # Sort by the most recent article published_at within each story,
+    # so truly fresh stories always float to the top of the feed.
+    latest_article_date = (
+        db.query(sa_table.c.story_id, func.max(Article.published_at).label("latest"))
+        .join(Article, Article.id == sa_table.c.article_id)
+        .group_by(sa_table.c.story_id)
+        .subquery()
+    )
     query = (
         db.query(Story)
+        .outerjoin(latest_article_date, latest_article_date.c.story_id == Story.id)
         .filter(Story.id.in_(select(summarized_ids_subq)))
-        .order_by(Story.created_at.desc())
+        .order_by(latest_article_date.c.latest.desc().nullslast(), Story.created_at.desc())
     )
     if category:
         query = query.filter(Story.category == category)
@@ -86,6 +96,13 @@ def get_feed(
         ).scalar()
         source_count = source_count_row or 0
 
+        # Get the most-recent article date for this story for display
+        latest_pub = db.execute(
+            select(func.max(Article.published_at))
+            .where(sa_table.c.story_id == story.id)
+            .where(Article.id == sa_table.c.article_id)
+        ).scalar()
+
         results.append({
             "id":           story.id,
             "title":        story.canonical_title,
@@ -95,6 +112,7 @@ def get_feed(
             "language":     summary.language if summary else lang,
             "source_count": source_count,
             "created_at":   story.created_at.isoformat(),
+            "published_at": latest_pub.isoformat() if latest_pub else story.created_at.isoformat(),
         })
 
     has_more = (offset + len(results)) < total

@@ -14,8 +14,9 @@ from ai_engine.nodes.translate_node import translate_node
 from ai_engine.nodes.persist_node import persist_node
 
 
-def has_new_articles(state: PipelineState) -> bool:
-    return len(state.get("raw_articles", [])) > 0
+def has_new_articles(state: PipelineState) -> str:
+    """Short-circuit to END if clean_node found no genuinely new articles."""
+    return "embed" if len(state.get("clean_articles", [])) > 0 else END
 
 
 def build_graph() -> StateGraph:
@@ -31,8 +32,9 @@ def build_graph() -> StateGraph:
     graph.add_node("persist", persist_node)
 
     graph.set_entry_point("ingest")
-    graph.add_conditional_edges("ingest", has_new_articles, {True: "clean", False: END})
-    graph.add_edge("clean", "embed")
+    # Always run ingest → clean; short-circuit AFTER clean if nothing new survived dedup.
+    graph.add_edge("ingest", "clean")
+    graph.add_conditional_edges("clean", has_new_articles, {"embed": "embed", END: END})
     graph.add_edge("embed", "dedup_cluster")
     graph.add_edge("dedup_cluster", "sentiment")
     graph.add_edge("sentiment", "summarize")
