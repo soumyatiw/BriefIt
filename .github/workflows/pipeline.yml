@@ -29,5 +29,6 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           GROQ_API_KEY_SUMMARIZE: ${{ secrets.GROQ_API_KEY_SUMMARIZE }}
           GROQ_API_KEY_SENTIMENT: ${{ secrets.GROQ_API_KEY_SENTIMENT }}
+          JWT_SECRET_KEY: "dummy_secret_for_pipeline"
         run: |
           python -m scripts.run_pipeline_once
