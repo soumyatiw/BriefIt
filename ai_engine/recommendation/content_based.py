@@ -7,13 +7,14 @@ from sqlalchemy.orm import Session
 
 from api.models.interaction import Interaction
 from api.models.article import Article
-from ai_engine.understanding.vector_store import VectorStore  # Day 5 FAISS wrapper
 
+
+
+from api.models.story import story_articles
 
 def get_recommended_story_ids(
     db: Session,
     user_id: int,
-    vector_store: VectorStore,
     k: int = 10,
 ) -> list[int]:
     """Return up to k story IDs similar to the stories the user has liked/bookmarked.
@@ -33,23 +34,39 @@ def get_recommended_story_ids(
     story_ids = [i.story_id for i in liked]
 
     # Fetch articles linked to those stories
-    try:
-        articles = (
-            db.query(Article)
-            .join(Article.story_articles)
-            .filter(Article.story_articles.any(story_id__in=story_ids))
-            .all()
-        )
-    except Exception:
-        articles = []
+    articles = (
+        db.query(Article)
+        .join(story_articles, Article.id == story_articles.c.article_id)
+        .filter(story_articles.c.story_id.in_(story_ids))
+        .filter(Article.embedding.isnot(None))
+        .all()
+    )
 
-    if not articles or not any(a.embedding for a in articles):
+    if not articles:
         return []
 
-    seed_vectors = [a.embedding for a in articles if a.embedding]
+    seed_vectors = [a.embedding for a in articles]
     recommended_ids: set[int] = set()
-    for vec in seed_vectors:
-        similar = vector_store.search(vec, k=k)
-        recommended_ids.update(similar)
 
-    return list(recommended_ids - set(story_ids))[:k]  # exclude what they already engaged with
+    for vec in seed_vectors:
+        # Find k closest articles to this seed vector
+        similar_articles = (
+            db.query(Article)
+            .filter(Article.embedding.isnot(None))
+            .order_by(Article.embedding.cosine_distance(vec))
+            .limit(k)
+            .all()
+        )
+        
+        for sim_a in similar_articles:
+            # We want the story IDs associated with these similar articles
+            associated_stories = db.query(story_articles.c.story_id).filter(story_articles.c.article_id == sim_a.id).all()
+            for row in associated_stories:
+                if row[0] not in story_ids:
+                    recommended_ids.add(row[0])
+                    if len(recommended_ids) >= k:
+                        break
+        if len(recommended_ids) >= k:
+            break
+
+    return list(recommended_ids)[:k]

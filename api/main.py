@@ -7,19 +7,9 @@ from sqlalchemy import text
 
 from api.database import engine
 from api.routes import auth, feed, stories, search, interactions
-from ai_engine.scheduler import start_scheduler
-
-_scheduler = None
-
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    global _scheduler
-    _scheduler = start_scheduler()
     yield
-    if _scheduler:
-        _scheduler.shutdown(wait=False)
-
 
 app = FastAPI(title="BriefIt API", lifespan=lifespan)
 

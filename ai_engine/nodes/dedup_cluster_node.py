@@ -7,14 +7,10 @@ from api.database import SessionLocal
 from api.models.article import Article
 from api.models.story import Story, story_articles
 from ai_engine.understanding.dedup_cluster import cluster_vectors, cosine_similarity, DBSCAN_EPS, MATCH_THRESHOLD
-from ai_engine.understanding.vector_store import VectorStore
 from ai_engine.state import PipelineState
 
 ROLLING_WINDOW_HOURS = 48
 
-
-def _get_vector(store: VectorStore, faiss_id: int) -> np.ndarray:
-    return store.index.reconstruct(int(faiss_id))
 
 
 def dedup_cluster_node(state: PipelineState) -> dict:
@@ -22,7 +18,6 @@ def dedup_cluster_node(state: PipelineState) -> dict:
     run_stats = dict(state.get("run_stats", {}))
     try:
         cutoff = datetime.utcnow() - timedelta(hours=ROLLING_WINDOW_HOURS)
-        store = VectorStore()
 
         assigned_article_ids = {
             row[0]
@@ -42,14 +37,14 @@ def dedup_cluster_node(state: PipelineState) -> dict:
                 .all()
             ]
             members = db.query(Article).filter(Article.id.in_(member_ids)).all()
-            vectors = [_get_vector(store, a.faiss_id) for a in members if a.faiss_id is not None]
+            vectors = [a.embedding for a in members if a.embedding is not None]
             if vectors:
                 story_centroids.append((story, np.mean(vectors, axis=0)))
 
         query = (
             db.query(Article)
             .filter(Article.published_at >= cutoff)
-            .filter(Article.faiss_id.isnot(None))
+            .filter(Article.embedding.isnot(None))
         )
         if assigned_article_ids:
             query = query.filter(~Article.id.in_(assigned_article_ids))
@@ -58,7 +53,7 @@ def dedup_cluster_node(state: PipelineState) -> dict:
         attached_count = 0
         still_unassigned = []
         for article in unassigned:
-            vec = _get_vector(store, article.faiss_id)
+            vec = article.embedding
             best_story, best_sim = None, -1.0
             for story, centroid in story_centroids:
                 sim = cosine_similarity(vec, centroid)
@@ -73,7 +68,7 @@ def dedup_cluster_node(state: PipelineState) -> dict:
 
         new_stories_created = 0
         if still_unassigned:
-            vectors = np.array([_get_vector(store, a.faiss_id) for a in still_unassigned])
+            vectors = np.array([a.embedding for a in still_unassigned])
             labels = cluster_vectors(vectors, eps=DBSCAN_EPS, min_samples=1)
 
             clusters: dict[int, list[Article]] = {}

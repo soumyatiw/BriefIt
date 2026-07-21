@@ -6,12 +6,18 @@ from sqlalchemy import text
 
 
 def main() -> None:
+    from api.config import settings
+    database_url = settings.database_url
+
+    if not database_url.startswith("sqlite"):
+        with engine.connect() as conn:
+            conn.execute(text("CREATE EXTENSION IF NOT EXISTS vector;"))
+            conn.commit()
+            print("PostgreSQL 'vector' extension ensured.")
+
     Base.metadata.create_all(bind=engine)
     tables = list(Base.metadata.tables.keys())
     print(f"Tables created: {', '.join(sorted(tables))}")
-
-    from api.config import settings
-    database_url = settings.database_url
 
     if database_url.startswith("sqlite"):
         # SQLite: create FTS5 virtual table for full-text search.

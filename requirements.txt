@@ -25,7 +25,7 @@ langgraph-checkpoint-postgres  # production (PostgreSQL)
 psycopg2-binary                # PostgreSQL driver
 fastembed                   # lightweight embeddings (no torch needed)
 scikit-learn                # DBSCAN clustering
-faiss-cpu                   # vector similarity search
+pgvector                    # vector similarity search in Postgres
 numpy
 groq                        # LLM API (summarization + sentiment)
 

@@ -3,7 +3,6 @@ from sqlalchemy.orm import Session
 from api.database import SessionLocal
 from api.models.article import Article
 from ai_engine.understanding.embedder import embed_batch
-from ai_engine.understanding.vector_store import VectorStore
 from ai_engine.state import PipelineState
 
 
@@ -23,15 +22,11 @@ def embed_node(state: PipelineState) -> dict:
     texts = [_embedding_input(a) for a in clean_articles]
     vectors = embed_batch(texts)
 
-    store = VectorStore()
-    faiss_ids = store.add(vectors)
-    store.save()
-
     embedded_articles = []
-    for article, faiss_id in zip(clean_articles, faiss_ids):
-        article_with_id = dict(article)
-        article_with_id["faiss_id"] = faiss_id
-        embedded_articles.append(article_with_id)
+    for article, vec in zip(clean_articles, vectors):
+        article_with_vec = dict(article)
+        article_with_vec["embedding"] = vec
+        embedded_articles.append(article_with_vec)
 
     db: Session = SessionLocal()
     try:
@@ -46,7 +41,7 @@ def embed_node(state: PipelineState) -> dict:
                 url=a["url"],
                 published_at=a.get("published_at"),
                 image_url=a.get("image_url"),
-                faiss_id=a["faiss_id"],
+                embedding=a["embedding"],
             ))
         db.commit()
     finally:

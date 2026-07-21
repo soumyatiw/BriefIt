@@ -5,6 +5,9 @@ from typing import TYPE_CHECKING
 
 from sqlalchemy import DateTime, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+# pyrefly: ignore [missing-import]
+from pgvector.sqlalchemy import Vector
+import numpy as np
 
 if TYPE_CHECKING:
     from api.models.source import Source
@@ -23,6 +26,7 @@ class Article(Base):
     url: Mapped[str] = mapped_column(String, unique=True, nullable=False)
     published_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     image_url: Mapped[str | None] = mapped_column(String, nullable=True)
-    faiss_id: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    # pgvector embedding
+    embedding: Mapped[np.ndarray | None] = mapped_column(Vector(384), nullable=True)
 
     source: Mapped["Source"] = relationship("Source", backref="articles")
