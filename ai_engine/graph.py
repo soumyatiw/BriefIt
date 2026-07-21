@@ -55,11 +55,16 @@ def compile_graph():
         checkpointer = SqliteSaver(conn)
     else:
         # Production — use the same Postgres DATABASE_URL as the rest of the app.
-        # Render's connection string starts with 'postgres://'; psycopg2 needs
-        # 'postgresql://', so normalise it here.
+        # Render's connection string starts with 'postgres://'; psycopg needs
+        # 'postgresql+psycopg://', so normalise it here.
+        import psycopg
         from langgraph.checkpoint.postgres import PostgresSaver
         pg_url = database_url.replace("postgres://", "postgresql://", 1)
-        checkpointer = PostgresSaver.from_conn_string(pg_url)
+        # In langgraph-checkpoint-postgres >= 2.x, from_conn_string() is a
+        # context manager. Open a long-lived sync connection instead so the
+        # checkpointer survives beyond this function's scope.
+        conn = psycopg.connect(pg_url, autocommit=True)
+        checkpointer = PostgresSaver(conn)
         checkpointer.setup()  # creates checkpoint tables on first run
 
     return graph.compile(checkpointer=checkpointer)
