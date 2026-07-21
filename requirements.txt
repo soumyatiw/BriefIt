@@ -20,7 +20,9 @@ email-validator
 # ── AI / NLP Pipeline ─────────────────────────────────────────────────────────
 langgraph
 langchain-core
-langgraph-checkpoint-sqlite
+langgraph-checkpoint-sqlite    # local dev (SQLite fallback)
+langgraph-checkpoint-postgres  # production (PostgreSQL)
+psycopg2-binary                # PostgreSQL driver
 sentence-transformers       # article embeddings
 torch                       # required by sentence-transformers
 scikit-learn                # DBSCAN clustering

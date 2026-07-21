@@ -10,14 +10,17 @@ from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
 
 from api.config import settings
 
-# Ensure the data/ directory exists before SQLite tries to create the file.
+# SQLite needs a local data/ directory; PostgreSQL doesn't, but this is harmless.
 os.makedirs("data", exist_ok=True)
 
-# SQLite requires check_same_thread=False when used with FastAPI's threaded
-# request handling (multiple threads may share the same connection).
+# check_same_thread is a SQLite-only argument — don't pass it to PostgreSQL.
+_connect_args = {"check_same_thread": False} if settings.database_url.startswith("sqlite") else {}
+
 engine = create_engine(
     settings.database_url,
-    connect_args={"check_same_thread": False},
+    connect_args=_connect_args,
+    # Tuned for PostgreSQL on Render's free-tier (pool_pre_ping detects stale connections).
+    pool_pre_ping=True,
 )
 
 # Session factory — all DB sessions are created from this.

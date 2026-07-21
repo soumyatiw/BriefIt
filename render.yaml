@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: briefit-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        sync: false           
+      - key: JWT_SECRET_KEY
+        sync: false           
+      - key: JWT_ALGORITHM
+        value: HS256
+      - key: JWT_EXPIRE_MINUTES
+        value: "1440"
+      - key: GROQ_API_KEY_SENTIMENT
+        sync: false           
+      - key: GROQ_API_KEY_SUMMARIZE
+        sync: false           
+      - key: GROQ_MODEL_SENTIMENT
+        value: llama-3.1-8b-instant
+      - key: GROQ_MODEL_SUMMARIZE
+        value: llama3-8b-8192
+      - key: ALLOWED_ORIGINS
+        sync: false           

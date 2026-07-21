@@ -1,11 +1,14 @@
 """
-GET /search?q=... — SQLite FTS5 full-text search over story titles + English summaries.
-Falls back to a plain LIKE query if the FTS5 virtual table hasn't been created yet,
-so search never hard-fails just because a migration step was missed.
+GET /search?q=... — Full-text search over story titles.
+- PostgreSQL (production): uses the tsvector GIN index on stories.search_vector.
+- SQLite (local dev): uses the FTS5 virtual table.
+- Universal fallback: plain ILIKE query if neither index exists yet.
 """
+import os
+
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
-from sqlalchemy import text, func, select
+from sqlalchemy import text
 
 from api.database import get_db
 from api.models.story import Story, story_articles as sa_table
@@ -13,6 +16,8 @@ from api.models.summary import Summary
 from api.models.article import Article
 
 router = APIRouter(prefix="/search", tags=["search"])
+
+_is_postgres = not os.getenv("DATABASE_URL", "sqlite://").startswith("sqlite")
 
 
 def _enrich_stories(stories: list[Story], lang: str, db: Session) -> list[dict]:
@@ -66,29 +71,54 @@ def search_stories(
     db: Session = Depends(get_db),
 ):
     stories: list[Story] = []
+    engine_used = "like_fallback"
 
-    # Try FTS5 first
-    try:
-        rows = db.execute(
-            text("""
-                SELECT s.id
-                FROM stories_fts f
-                JOIN stories s ON s.id = f.rowid
-                JOIN summaries su ON su.story_id = s.id AND su.language = 'en'
-                WHERE stories_fts MATCH :q
-                ORDER BY rank
-                LIMIT 20
-            """),
-            {"q": q},
-        ).fetchall()
-        if rows:
-            ids = [r[0] for r in rows]
-            id_order = {sid: i for i, sid in enumerate(ids)}
-            fetched = db.query(Story).filter(Story.id.in_(ids)).all()
-            stories = sorted(fetched, key=lambda s: id_order.get(s.id, 999))
-    except Exception:
-        pass  # FTS5 table missing or syntax issue — fall through
+    if _is_postgres:
+        # PostgreSQL tsvector search — fast, ranked, handles partial words via plainto_tsquery.
+        try:
+            rows = db.execute(
+                text("""
+                    SELECT s.id
+                    FROM stories s
+                    WHERE s.search_vector @@ plainto_tsquery('english', :q)
+                    ORDER BY ts_rank(s.search_vector, plainto_tsquery('english', :q)) DESC
+                    LIMIT 20
+                """),
+                {"q": q},
+            ).fetchall()
+            if rows:
+                ids = [r[0] for r in rows]
+                id_order = {sid: i for i, sid in enumerate(ids)}
+                fetched = db.query(Story).filter(Story.id.in_(ids)).all()
+                stories = sorted(fetched, key=lambda s: id_order.get(s.id, 999))
+                engine_used = "tsvector"
+        except Exception:
+            pass  # index not created yet — fall through to ILIKE
+    else:
+        # SQLite FTS5 search.
+        try:
+            rows = db.execute(
+                text("""
+                    SELECT s.id
+                    FROM stories_fts f
+                    JOIN stories s ON s.id = f.rowid
+                    JOIN summaries su ON su.story_id = s.id AND su.language = 'en'
+                    WHERE stories_fts MATCH :q
+                    ORDER BY rank
+                    LIMIT 20
+                """),
+                {"q": q},
+            ).fetchall()
+            if rows:
+                ids = [r[0] for r in rows]
+                id_order = {sid: i for i, sid in enumerate(ids)}
+                fetched = db.query(Story).filter(Story.id.in_(ids)).all()
+                stories = sorted(fetched, key=lambda s: id_order.get(s.id, 999))
+                engine_used = "fts5"
+        except Exception:
+            pass  # FTS5 table missing — fall through
 
+    # Universal fallback — works on both SQLite and PostgreSQL.
     if not stories:
         stories = (
             db.query(Story)
@@ -100,5 +130,5 @@ def search_stories(
 
     return {
         "results": _enrich_stories(stories, lang, db),
-        "engine":  "fts5" if stories else "like_fallback",
+        "engine":  engine_used,
     }

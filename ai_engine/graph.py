@@ -1,7 +1,6 @@
-import sqlite3
+import os
 
 from langgraph.graph import StateGraph, END
-from langgraph.checkpoint.sqlite import SqliteSaver
 
 from ai_engine.state import PipelineState
 from ai_engine.nodes.ingest_node import ingest_node
@@ -32,7 +31,6 @@ def build_graph() -> StateGraph:
     graph.add_node("persist", persist_node)
 
     graph.set_entry_point("ingest")
-    # Always run ingest → clean; short-circuit AFTER clean if nothing new survived dedup.
     graph.add_edge("ingest", "clean")
     graph.add_conditional_edges("clean", has_new_articles, {"embed": "embed", END: END})
     graph.add_edge("embed", "dedup_cluster")
@@ -47,6 +45,21 @@ def build_graph() -> StateGraph:
 
 def compile_graph():
     graph = build_graph()
-    conn = sqlite3.connect("data/pipeline_checkpoints.db", check_same_thread=False)
-    checkpointer = SqliteSaver(conn)
+    database_url = os.getenv("DATABASE_URL", "sqlite:///./data/pipeline_checkpoints.db")
+
+    if database_url.startswith("sqlite"):
+        # Local development fallback — no Postgres required.
+        import sqlite3
+        from langgraph.checkpoint.sqlite import SqliteSaver
+        conn = sqlite3.connect("data/pipeline_checkpoints.db", check_same_thread=False)
+        checkpointer = SqliteSaver(conn)
+    else:
+        # Production — use the same Postgres DATABASE_URL as the rest of the app.
+        # Render's connection string starts with 'postgres://'; psycopg2 needs
+        # 'postgresql://', so normalise it here.
+        from langgraph.checkpoint.postgres import PostgresSaver
+        pg_url = database_url.replace("postgres://", "postgresql://", 1)
+        checkpointer = PostgresSaver.from_conn_string(pg_url)
+        checkpointer.setup()  # creates checkpoint tables on first run
+
     return graph.compile(checkpointer=checkpointer)
