@@ -25,3 +25,10 @@ node_modules/
 # IDE
 .vscode/
 .idea/
+
+# Temp DB files
+data/*.db-shm
+data/*.db-wal
+
+# Build outputs
+frontend/dist/
