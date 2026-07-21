@@ -92,10 +92,14 @@ export default function LandingPage() {
       <nav className="sticky top-0 z-50 bg-[#EEF2F7]/80 backdrop-blur-md border-b border-white/60">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-ocean shadow-md shadow-ocean/30 flex items-center justify-center">
-              <span className="text-white font-black text-sm">B</span>
+            <div className="w-9 h-9 rounded-lg bg-ocean shadow-md shadow-ocean/30 flex items-center justify-center">
+              <span className="text-white font-logo font-normal text-lg">B</span>
             </div>
-            <span className="text-xl font-black text-ocean tracking-tight">BriefIt</span>
+            <div>
+              <h1 className="text-xl font-black text-ocean tracking-tight">BriefIt</h1>
+              <p className="text-xs text-teal font-medium">Your news, distilled</p>
+            </div>
+
           </div>
           <div className="flex items-center gap-2">
             <button

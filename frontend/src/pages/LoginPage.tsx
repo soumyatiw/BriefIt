@@ -44,12 +44,12 @@ export default function LoginPage() {
         {/* Logo */}
         <div className="flex justify-center mb-8">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-ocean shadow-lg shadow-ocean/30 flex items-center justify-center">
-              <span className="text-white font-black text-xl">B</span>
+            <div className="w-12 h-12 rounded-xl bg-ocean shadow-lg shadow-ocean/30 flex items-center justify-center">
+              <span className="text-white font-logo font-normal text-xl">B</span>
             </div>
             <div>
               <h1 className="text-3xl font-black text-ocean tracking-tight">BriefIt</h1>
-              <p className="text-xs text-teal font-medium">AI-powered multilingual news</p>
+              <p className="text-xs text-teal font-medium">Your news, distilled</p>
             </div>
           </div>
         </div>

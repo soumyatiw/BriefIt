@@ -34,7 +34,7 @@ export default function SavedPage() {
       <header className="flex items-center justify-between mb-7">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-ocean shadow-md shadow-ocean/30 flex items-center justify-center">
-            <span className="text-white font-black text-lg">B</span>
+            <span className="text-white font-logo font-normal text-lg">B</span>
           </div>
           <div>
             <h1 className="text-2xl font-black text-ocean tracking-tight leading-none">BriefIt</h1>
