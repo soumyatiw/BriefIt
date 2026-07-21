@@ -16,8 +16,13 @@ os.makedirs("data", exist_ok=True)
 # check_same_thread is a SQLite-only argument — don't pass it to PostgreSQL.
 _connect_args = {"check_same_thread": False} if settings.database_url.startswith("sqlite") else {}
 
+# Render uses 'postgres://' but SQLAlchemy requires 'postgresql://'
+db_url = settings.database_url
+if db_url.startswith("postgres://"):
+    db_url = db_url.replace("postgres://", "postgresql://", 1)
+
 engine = create_engine(
-    settings.database_url,
+    db_url,
     connect_args=_connect_args,
     # Tuned for PostgreSQL on Render's free-tier (pool_pre_ping detects stale connections).
     pool_pre_ping=True,
