@@ -10,7 +10,8 @@ def main() -> None:
     tables = list(Base.metadata.tables.keys())
     print(f"Tables created: {', '.join(sorted(tables))}")
 
-    database_url = os.getenv("DATABASE_URL", "sqlite://")
+    from api.config import settings
+    database_url = settings.database_url
 
     if database_url.startswith("sqlite"):
         # SQLite: create FTS5 virtual table for full-text search.
