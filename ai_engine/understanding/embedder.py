@@ -1,20 +1,22 @@
 import numpy as np
-from sentence_transformers import SentenceTransformer
+# pyrefly: ignore [missing-import]
+from fastembed import TextEmbedding
 
-_MODEL_NAME = "paraphrase-multilingual-mpnet-base-v2"
-_model: SentenceTransformer | None = None
+_MODEL_NAME = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+_model: TextEmbedding | None = None
 
 
-def get_model() -> SentenceTransformer:
+def get_model() -> TextEmbedding:
     global _model
     if _model is None:
-        _model = SentenceTransformer(_MODEL_NAME)
+        _model = TextEmbedding(model_name=_MODEL_NAME)
     return _model
 
 
 def embed_batch(texts: list[str]) -> np.ndarray:
     model = get_model()
-    return model.encode(texts, convert_to_numpy=True, batch_size=32, show_progress_bar=False)
+    embeddings = list(model.embed(texts, batch_size=32))
+    return np.array(embeddings)
 
 
 def embed_one(text: str) -> np.ndarray:

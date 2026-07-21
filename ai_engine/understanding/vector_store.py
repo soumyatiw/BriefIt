@@ -4,7 +4,7 @@ import faiss
 
 INDEX_DIR = "data/faiss_index"
 INDEX_PATH = os.path.join(INDEX_DIR, "articles.index")
-EMBEDDING_DIM = 768
+EMBEDDING_DIM = 384
 
 
 class VectorStore:
