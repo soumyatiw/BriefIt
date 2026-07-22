@@ -80,6 +80,7 @@ def search_stories(
                 text("""
                     SELECT s.id
                     FROM stories s
+                    JOIN summaries su ON su.story_id = s.id AND su.language = 'en'
                     WHERE s.search_vector @@ plainto_tsquery('english', :q)
                     ORDER BY ts_rank(s.search_vector, plainto_tsquery('english', :q)) DESC
                     LIMIT 20
