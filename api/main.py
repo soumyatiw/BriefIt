@@ -15,7 +15,7 @@ app = FastAPI(title="BriefIt API", lifespan=lifespan)
 
 ALLOWED_ORIGINS = os.getenv(
     "ALLOWED_ORIGINS",
-    "http://localhost:5173"   # safe fallback for local dev
+    "http://localhost:5173,https://briefit-ai.vercel.app"   # safe fallback for local dev & Vercel
 ).split(",")
 
 app.add_middleware(
