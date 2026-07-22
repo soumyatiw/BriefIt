@@ -21,6 +21,6 @@ services:
       - key: GROQ_MODEL_SENTIMENT
         value: llama-3.1-8b-instant
       - key: GROQ_MODEL_SUMMARIZE
-        value: llama3-8b-8192
+        value: llama-3.1-8b-instant
       - key: ALLOWED_ORIGINS
         sync: false           
