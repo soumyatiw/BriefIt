@@ -11,6 +11,8 @@
 
 The system ingests raw RSS news feeds, uses **DBSCAN** and **FastEmbed (MiniLM)** to semantically cluster related articles, and employs **LangGraph** agents backed by **Meta Llama 3.1 8B** (via Groq) to synthesise comprehensive, neutral summaries and perform sentiment analysis.
 
+**Live Demo:** [https://briefit-ai.vercel.app](https://briefit-ai.vercel.app)
+
 ---
 
 ## Team Information
@@ -44,7 +46,7 @@ Follow these steps to run BriefIt locally.
 ### 1. Prerequisites
 - **Python 3.12+**
 - **Node.js 20+**
-- **PostgreSQL** (Local or Neon Cloud)
+- **PostgreSQL** (Neon Cloud)
 - **Groq API Keys** (Free tier)
 
 ### 2. Clone the Repository
