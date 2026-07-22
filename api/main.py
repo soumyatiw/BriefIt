@@ -13,10 +13,13 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="BriefIt API", lifespan=lifespan)
 
-ALLOWED_ORIGINS = os.getenv(
-    "ALLOWED_ORIGINS",
-    "http://localhost:5173,https://briefit-ai.vercel.app"   # safe fallback for local dev & Vercel
-).split(",")
+env_origins = os.getenv("ALLOWED_ORIGINS", "")
+ALLOWED_ORIGINS = [o.strip() for o in env_origins.split(",") if o.strip()]
+
+# Forcefully append safe defaults if they are missing
+for default_origin in ["http://localhost:5173", "https://briefit-ai.vercel.app"]:
+    if default_origin not in ALLOWED_ORIGINS:
+        ALLOWED_ORIGINS.append(default_origin)
 
 app.add_middleware(
     CORSMiddleware,
