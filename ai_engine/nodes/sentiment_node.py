@@ -70,9 +70,9 @@ def sentiment_node(state: PipelineState) -> dict:
             story.category = classify_category(all_titles, all_text)
 
             tagged_count += 1
+            db.commit()
             time.sleep(REQUEST_INTERVAL)
 
-        db.commit()
         logger.info("Sentiment analysis complete: tagged %d stories", tagged_count)
         run_stats["sentiment_tagged"] = tagged_count
 
