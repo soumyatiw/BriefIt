@@ -23,6 +23,7 @@ langchain-core
 langgraph-checkpoint-sqlite    # local dev (SQLite fallback)
 langgraph-checkpoint-postgres  # production (PostgreSQL)
 psycopg2-binary                # PostgreSQL driver
+psycopg[binary]                # Required by langgraph-checkpoint-postgres for psycopg 3
 fastembed                   # lightweight embeddings (no torch needed)
 scikit-learn                # DBSCAN clustering
 pgvector                    # vector similarity search in Postgres

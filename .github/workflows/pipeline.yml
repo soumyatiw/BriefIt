@@ -31,4 +31,5 @@ jobs:
           GROQ_API_KEY_SENTIMENT: ${{ secrets.GROQ_API_KEY_SENTIMENT }}
           JWT_SECRET_KEY: "dummy_secret_for_pipeline"
         run: |
+          python -m scripts.delete_old_news
           python -m scripts.run_pipeline_once
