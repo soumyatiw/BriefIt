@@ -12,33 +12,25 @@ def main():
     cutoff_date = datetime.now() - timedelta(days=7)
     
     try:
-        # Find old articles
-        old_articles = db.query(Article).filter(Article.published_at < cutoff_date).all()
-        old_article_ids = [a.id for a in old_articles]
+        # Find IDs of old articles (server-side subquery)
+        old_article_ids_query = db.query(Article.id).filter(Article.published_at < cutoff_date)
         
-        deleted_articles_count = 0
-        if old_article_ids:
-            # 1. Delete links in story_articles for these articles
-            db.execute(story_articles.delete().where(story_articles.c.article_id.in_(old_article_ids)))
-            # 2. Delete the articles
-            deleted_articles_count = db.query(Article).filter(Article.id.in_(old_article_ids)).delete(synchronize_session=False)
-            logger.info(f"Deleted {deleted_articles_count} articles published before {cutoff_date.date()}")
-        else:
-            logger.info(f"No articles found published before {cutoff_date.date()}")
+        # 1. Delete links in story_articles for these articles
+        db.execute(story_articles.delete().where(story_articles.c.article_id.in_(old_article_ids_query)))
+        
+        # 2. Delete the articles
+        deleted_articles_count = db.query(Article).filter(Article.published_at < cutoff_date).delete(synchronize_session=False)
+        logger.info(f"Deleted {deleted_articles_count} articles published before {cutoff_date.date()}")
             
-        # Find old stories based on created_at
-        old_stories = db.query(Story).filter(Story.created_at < cutoff_date).all()
-        old_story_ids = [s.id for s in old_stories]
+        # Find IDs of old stories (server-side subquery)
+        old_story_ids_query = db.query(Story.id).filter(Story.created_at < cutoff_date)
         
-        deleted_stories_count = 0
-        if old_story_ids:
-            # 1. Delete links in story_articles for these stories
-            db.execute(story_articles.delete().where(story_articles.c.story_id.in_(old_story_ids)))
-            # 2. Delete the stories
-            deleted_stories_count = db.query(Story).filter(Story.id.in_(old_story_ids)).delete(synchronize_session=False)
-            logger.info(f"Deleted {deleted_stories_count} stories created before {cutoff_date.date()}")
-        else:
-            logger.info(f"No stories found created before {cutoff_date.date()}")
+        # 1. Delete links in story_articles for these stories
+        db.execute(story_articles.delete().where(story_articles.c.story_id.in_(old_story_ids_query)))
+        
+        # 2. Delete the stories
+        deleted_stories_count = db.query(Story).filter(Story.created_at < cutoff_date).delete(synchronize_session=False)
+        logger.info(f"Deleted {deleted_stories_count} stories created before {cutoff_date.date()}")
 
         db.commit()
         logger.info("Cleanup successful.")
